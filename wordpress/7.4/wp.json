@@ -1,0 +1,58 @@
+{
+  "listeners": {
+    "*:8000": {
+      "pass": "routes/wordpress"
+    }
+  },
+  "routes": {
+    "wordpress": [
+      {
+        "match": {
+          "uri": [
+            "*.php",
+            "*.php/*",
+            "/wp-admin/"
+          ]
+        },
+        "action": {
+          "pass": "applications/wordpress_direct"
+        }
+      },
+      {
+        "action": {
+          "share": "/var/www/html",
+          "fallback": {
+            "pass": "applications/wordpress_index"
+          }
+        }
+      }
+    ]
+  },
+  "applications": {
+    "wordpress_direct": {
+      "type": "php",
+      "root": "/var/www/html",
+      "user": "www-data",
+      "group": "www-data",
+      "working_directory": "/var/www/html",
+      "index": "index.php"
+    },
+    "wordpress_index": {
+      "type": "php",
+      "root": "/var/www/html",
+      "user": "www-data",
+      "group": "www-data",
+      "working_directory": "/var/www/html",
+      "processes": {
+        "max": 10,
+        "spare": 3,
+        "idle_timeout": 20
+      },
+      "limits": {
+        "timeout": 60,
+        "requests": 1000
+      },
+      "script": "index.php"
+    }
+  }
+}
