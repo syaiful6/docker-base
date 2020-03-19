@@ -304,8 +304,8 @@ curl_put()
 }
 
 if [ "$1" = "unitd" ]; then
-    if /usr/bin/find "/var/lib/unit/" -mindepth 1 -print -quit 2>/dev/null | /bin/grep -q .; then
-        echo "$0: /var/lib/unit/ is not empty, skipping initial configuration..."
+    if /usr/bin/find "/usr/local/state" -mindepth 1 -print -quit 2>/dev/null | /bin/grep -q .; then
+        echo "$0: /usr/local/state is not empty, skipping initial configuration..."
     else
         if /usr/bin/find "/docker-entrypoint.d/" -mindepth 1 -print -quit 2>/dev/null | /bin/grep -q .; then
             echo "$0: /docker-entrypoint.d/ is not empty, launching Unit daemon to perform initial configuration..."

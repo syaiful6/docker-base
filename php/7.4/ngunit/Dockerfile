@@ -10,11 +10,13 @@ RUN set -eux; \
     ; \
     curl -fsSL -o /usr/src/ngunit.tar.gz https://unit.nginx.org/download/unit-1.16.0.tar.gz; \
     tar xzf /usr/src/ngunit.tar.gz -C /usr/src; \
+    rm /usr/src/ngunit.tar.gz; \
     cd /usr/src/unit-1.16.0; \
     ls -la; \
     ./configure \
         --prefix=/usr/local \
         --log=/var/log/unit.log \
+        --tmp=/tmp \
     ; \
     ./configure php \
         --module=php7.4 \
@@ -22,6 +24,11 @@ RUN set -eux; \
     make; \
     make install; \
     apk del --no-network .build-deps;
+
+RUN apk add --no-cache --virtual .deps shadow \
+    && usermod -u 1000 www-data \
+    && groupmod -g 1000 www-data \
+    && apk del --no-network .deps
 
 # forward log to docker log collector
 RUN ln -sf /dev/stdout /var/log/unit.log
