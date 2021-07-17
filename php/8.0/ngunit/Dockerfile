@@ -6,7 +6,7 @@ RUN set -eux; \
     apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
     openssl-dev \
-    pcre-dev \ 
+    pcre2-dev \ 
     curl-dev \
     ; \
     curl -fsSL -o /usr/src/ngunit.tar.gz https://unit.nginx.org/download/unit-1.24.0.tar.gz; \
