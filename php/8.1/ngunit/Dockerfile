@@ -1,4 +1,4 @@
-FROM syaiful6/php:8.0-alpine3.16
+FROM syaiful6/php:8.1-alpine3.16
 
 ENV UNIT_VERSION          1.28.0~alpine
 
@@ -20,7 +20,7 @@ RUN set -eux; \
     --tmp=/tmp \
     ; \
     ./configure php \
-    --module=php8.0 \
+    --module=php8.1 \
     ; \
     make; \
     make install; \

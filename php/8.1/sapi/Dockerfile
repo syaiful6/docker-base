@@ -53,11 +53,11 @@ ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
-ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 BFDDD28642824F8118EF77909B67A5C12229118F
+ENV GPG_KEYS 528995BFEDFBA7191D46839EF9BA0ADA31CBD89E 39B641343D8C104B2B146DC3F9C39DC0B9698544 F1F692238FBC1666E5A5CCD4199F9DFEF6FFBAFD
 
-ENV PHP_VERSION 8.0.23
-ENV PHP_URL="https://www.php.net/distributions/php-8.0.23.tar.xz" PHP_ASC_URL="https://www.php.net/distributions/php-8.0.23.tar.xz.asc"
-ENV PHP_SHA256="65e474b6bd8cfc9d4a8a56268a755e2f9d3e7499e1687e6401a9f2b047600f87"
+ENV PHP_VERSION 8.1.11
+ENV PHP_URL="https://www.php.net/distributions/php-8.1.11.tar.xz" PHP_ASC_URL="https://www.php.net/distributions/php-8.1.11.tar.xz.asc"
+ENV PHP_SHA256="3005198d7303f87ab31bc30695de76e8ad62783f806b6ab9744da59fe41cc5bd"
 
 RUN set -eux; \
 	\
@@ -93,12 +93,14 @@ RUN set -eux; \
 	argon2-dev \
 	coreutils \
 	curl-dev \
+	gnu-libiconv-dev \
 	libedit-dev \
 	libsodium-dev \
 	libxml2-dev \
 	linux-headers \
 	oniguruma-dev \
 	openssl-dev \
+	readline-dev \
 	sqlite-dev \
 	; \
 	\
@@ -138,8 +140,10 @@ RUN set -eux; \
 	--with-sqlite3=/usr \
 	\
 	--with-curl \
+	--with-iconv=/usr \
 	--with-libedit \
 	--with-openssl \
+	--with-readline \
 	--with-zlib \
 	\
 	# in PHP 7.4+, the pecl/pear installers are officially deprecated (requiring an explicit "--with-pear") and will be removed in PHP 8+; see also https://github.com/docker-library/php/issues/846#issuecomment-505638494
